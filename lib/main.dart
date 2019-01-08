@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
 void main() => runApp(MyApp());
 
@@ -120,26 +121,83 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class NewPage extends StatelessWidget {
+class NewPage extends StatefulWidget {
+  NewPage({Key key, this.initVal: 0});
+
+  final int initVal;
+
+  @override
+  _NewPageState createState() => new _NewPageState();
+}
+
+class _NewPageState extends State<NewPage> {
+  int _count;
+
+  @override
+  void initState() {
+    super.initState();
+    //初始化状态
+    _count = widget.initVal;
+    print("initState");
+  }
+
   @override
   Widget build(BuildContext context) {
+    final wordPair = new WordPair.random();
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: new Text('title'),
       ),
       body: new Center(
-          child: Row(
+          child: Column(
         children: <Widget>[
           Text('点击返回'),
           FlatButton(
-            child: Text('点击返回之前的路由'),
+            child: Text('点击返回'),
+            textColor: Colors.red,
             onPressed: () {
               Navigator.pop(context, () {});
             },
-          )
+          ),
+          Text('点击下方自增'),
+          FlatButton(
+            child: Text('$_count'),
+            textColor: Colors.red,
+            onPressed: () => setState(() => ++_count),
+          ),
         ],
       )),
     );
+  }
+
+  @override
+  void didUpdateWidget(NewPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print("didUpdateWidget");
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    print("deactive");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print("dispose");
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    print("reassemble");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("didChangeDependencies");
   }
 }
