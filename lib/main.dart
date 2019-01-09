@@ -19,10 +19,11 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       routes: {
         "new_page": (context) => NewPage(),
+        "layout_test": (context) => LayoutTestPage()
       },
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -48,7 +49,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 10;
+  int _counter = 10000;
 
   void _incrementCounter() {
     setState(() {
@@ -93,10 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              '哈哈哈 测试',
+              '哈哈哈 测试' * 6,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
             ),
             Text(
               '$_counter',
@@ -132,13 +136,15 @@ class NewPage extends StatefulWidget {
 
 class _NewPageState extends State<NewPage> {
   int _count;
+  bool _switchSelected = true;
+  bool _checkboxSelected = true;
 
   @override
   void initState() {
     super.initState();
     //初始化状态
     _count = widget.initVal;
-    print("initState");
+    print("状态初始化：initState");
   }
 
   @override
@@ -154,8 +160,14 @@ class _NewPageState extends State<NewPage> {
         children: <Widget>[
           Text('点击返回'),
           FlatButton(
-            child: Text('点击返回'),
-            textColor: Colors.red,
+            child: Text(
+              '点击返回',
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: 20,
+              ),
+            ),
+            // textColor: Colors.red,
             onPressed: () {
               Navigator.pop(context, () {});
             },
@@ -166,6 +178,79 @@ class _NewPageState extends State<NewPage> {
             textColor: Colors.red,
             onPressed: () => setState(() => ++_count),
           ),
+          Image.asset(
+            'images/ios.png',
+            width: 100.0,
+          ),
+          Image.network(
+            'http://t2.hddhhn.com/uploads/tu/201610/198/kytlblghckn.jpg',
+            width: 100.1,
+            fit: BoxFit.cover,
+            colorBlendMode: BlendMode.difference,
+            color: Colors.red,
+          ),
+          Switch(
+            value: _switchSelected, //当前状态
+            onChanged: (value) {
+              //重新构建页面
+              setState(() {
+                _switchSelected = value;
+              });
+            },
+          ),
+          Checkbox(
+            value: _checkboxSelected,
+            activeColor: Colors.red, //选中时的颜色
+            onChanged: (value) {
+              setState(() {
+                _checkboxSelected = value;
+              });
+            },
+          ),
+          Row(
+            // 文字横向对其方式 start|center|end 在MainAxisSize.min 时不生效 相当于web开发中的文本元素 没有铺满一行，所以无法设置左中右的textAlign
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text(" hello world "),
+              Text(" I am Jack "),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(" hello world "),
+              Text(" I am Jack "),
+            ],
+          ),
+          Row(
+            // 横轴的横向排列，是从左开始还是从右开始
+            textDirection: TextDirection.ltr,
+            // 横向对其方式 只有在MainAxisSize.max时生效
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Text(" hello world "),
+              Text(" I am Jack "),
+            ],
+          ),
+          Row(
+            // 纵轴（垂直）方向的排列
+            verticalDirection: VerticalDirection.up,
+            // 纵轴的对其方式，参考系为verticalDirection
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                " hello world ",
+                style: TextStyle(fontSize: 30.0),
+              ),
+              Text(" I am Jack "),
+            ],
+          ),
+          FlatButton(
+            child: Text('去布局练习页'),
+            onPressed: () => Navigator.pushNamed(context, 'layout_test'),
+          )
         ],
       )),
     );
@@ -180,24 +265,45 @@ class _NewPageState extends State<NewPage> {
   @override
   void deactivate() {
     super.deactivate();
-    print("deactive");
+    print("当state移除时：deactive");
   }
 
   @override
   void dispose() {
     super.dispose();
-    print("dispose");
+    print("点state永久移除时：dispose 类似react unmount");
   }
 
   @override
   void reassemble() {
     super.reassemble();
-    print("reassemble");
+    print("开发模式中，当热重载后：reassemble");
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    print("didChangeDependencies");
+    print("当state的依赖发生变化时调用：didChangeDependencies");
+  }
+}
+
+class LayoutTestPage extends StatefulWidget {
+  _LayoutTestPageState createState() => new _LayoutTestPageState();
+}
+
+class _LayoutTestPageState extends State<LayoutTestPage> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('布局练习'),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[Text('哈哈哈')],
+        ),
+      ),
+    );
   }
 }
