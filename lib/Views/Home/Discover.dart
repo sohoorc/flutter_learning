@@ -1,5 +1,10 @@
+/**
+ * home-》发现 
+ */
+
 import 'package:flutter/material.dart';
 import '../../global.config.dart';
+import './../../Widgets/Home/Discover/Recommend.dart';
 
 class Discover extends StatefulWidget {
   _DiscoverState createState() => new _DiscoverState();
@@ -16,7 +21,7 @@ class _DiscoverState extends State<Discover>
           children: <Widget>[
             new Expanded(
                 child: new FlatButton.icon(
-              onPressed: () {
+            onPressed: () {
                 Navigator.of(context)
                     .push(new MaterialPageRoute(builder: (context) {
                   // return new SearchPage();
@@ -69,7 +74,7 @@ class _DiscoverState extends State<Discover>
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.music_video,
+                Icons.equalizer,
                 size: 24,
                 color: Colors.white54,
               ),
@@ -79,21 +84,24 @@ class _DiscoverState extends State<Discover>
           ],
           title: searchBar(),
           bottom: TabBar(
+            // labelStyle:TextStyle(
+            //   color: Colors.blue
+            // ),
+            labelPadding: EdgeInsets.only(bottom: 0, top: 0),
+            // 底部指示器宽度计算方式，tab||label
+            indicatorSize: TabBarIndicatorSize.label,
+            // indicatorWeight: 15.0,
             controller: _tabController,
             indicatorPadding: kTabLabelPadding,
-            // labelColor:
-            //     GlobalConfig.dark == true ? new Color(0xFF63FDD9) : Colors.blue,
-            // unselectedLabelColor:
-            //     GlobalConfig.dark == true ? Colors.white : Colors.black,
             tabs: [
-              Tab(text: "个性推荐"),
+              Tab(text: '个性推荐'),
               Tab(text: "主播电台"),
             ],
           ),
         ),
         body: TabBarView(
           controller: _tabController,
-          children: <Widget>[Text('个性推荐'), Text('主播电台')],
+          children: <Widget>[new Recommend(), Text('主播电台')],
         ),
       ),
       theme: GlobalConfig.themeData,
