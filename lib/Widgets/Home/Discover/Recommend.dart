@@ -34,14 +34,7 @@ class _RecommendState extends State<Recommend> {
             onRefresh: _refresh,
             child: ListView(
               padding: EdgeInsets.only(left: 4, right: 4),
-              children: <Widget>[
-                BannerPage(),
-                RecPlayLists(),
-                NewMusicLists(),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-              ],
+              children: <Widget>[BannerPage(), RecPlayLists(), NewMusicLists()],
             )));
   }
 }
@@ -202,12 +195,12 @@ class _NewMusicListsState extends State<NewMusicLists> {
     },
     {
       "title": "发如雪",
-      "author":"周杰伦",
+      "author": "周杰伦",
       "imgUrl":
           "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547985779&di=858a2177a7e35824ddbd2811f21c97f1&imgtype=jpg&er=1&src=http%3A%2F%2Fgss0.baidu.com%2F-vo3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F024f78f0f736afc384e6e5c6bf19ebc4b64512af.jpg"
     },
     {
-      "author":"周杰伦",
+      "author": "周杰伦",
       "title": "夜的第七章",
       "imgUrl":
           "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1547391420710&di=bd9d0b745f7fe2ed7db8276a2b4b2b41&imgtype=0&src=http%3A%2F%2Fs9.rr.itc.cn%2Fr%2FwapChange%2F20167_17_3%2Fa07qpq02912315556310.jpg"
@@ -290,6 +283,7 @@ class _NewMusicListsState extends State<NewMusicLists> {
           // 推荐歌单warp 通过container容器包裹为了能够让容器撑满横屏，使下方warp的alignment属性生效
           Container(
               width: MediaQuery.of(context).size.width - 8,
+              padding: EdgeInsets.only(bottom: 10),
               child: Wrap(
                 alignment: WrapAlignment.spaceBetween,
                 runAlignment: WrapAlignment.spaceBetween,
